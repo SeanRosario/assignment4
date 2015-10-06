@@ -1,0 +1,344 @@
+Q1.Describe three main techniques that the author used to structure the program.  
+
+A1. Three main techniques that the author uses to the structure of the program are:
+
+•	Modular programming : The concerns or sets of information that affects the code of a program is separated by distinct functions
+
+
+•	Single Responsibility : A class or module should have responsibility over one piece of functionality. The responsibility is encapsulated by the class
+
+
+•	Vertical Formatting: Each blank line is a visual cue that identifies a new and separate concept 
+
+
+Reference: Lecture slides.
+
+
+
+
+
+Q2. Has the author used meaningful names? Give some examples of meaningful names used and what you think they mean. Give some examples of where the author has not used meaningful names.  
+
+
+A2. 
+
+Yes , for the most part, the author has used meaningful names:
+
+
+Examples of meaningful variables :
+
+
+trying_to_get_into_cave = False
+Line 49 in model.py
+
+trying_to_catch_bird = False
+Line 50 in model.py
+
+trying_to_deal_with_snake = False
+Line 51 in model.py
+
+
+
+treasures_not_found  # TALLY how many treasures have not yet been seen
+Line 29 in game.py
+
+
+
+Examples of non-meaningful variables:
+
+
+foobar # FOOBAR turn number of most recent still-valid "fee"
+Line 27 in game.py
+
+
+self.clock1 = 30     # counts down from finding last treasure
+Line 45 in game.py
+
+
+self.clock2 = 50                # counts down until cave closes
+Line 46 in game.py
+
+
+full_wests = 0  # how many times they have typed "west" instead of "w" Line 23 in game.py
+
+
+
+
+Q3. Do the functions used in the code do one thing? Give some examples of functions that only do one thing. Give some examples of functions that do more than one thing.
+
+
+A3. Some functions do one thing, however there are functions also present that do more than one thing.
+
+
+Examples of functions that only do one thing:
+
+from game.py (line 109):
+
+
+  def is_finished(self):
+	return (self.is_dead or self.is_done) and not self.yesno_callback
+
+
+from model.py (line 63):
+
+  def is_forced(self):
+        return self.travel_table and self.travel_table[0].is_forced
+
+
+
+
+examples of functions that do more than one thing:
+
+
+move_dwarf() Line 188
+
+
+
+
+
+
+Q4. Do any of the functions cause side effects? If so, which ones?
+
+ 
+
+A4. The function def move_to(self, newloc=None) contains the following code (line 181 and line 182):
+
+if is_dwarf_area and self.dwarf_stage > 0:
+ 			self.move_dwarves()
+
+
+
+When the function move_to() is called, the function move_dwarves() may or may not be called. Therefore, the variables and object contained in move_dwaves() may or may not be affected.
+
+
+
+
+
+
+Q5. Can you find any repeated code that could be made into a function?
+
+A5. The module play.py contains repeated code in the functions play() and resume() functions. Lines 18,20,21,25 from play() and lines 30,32,33,36 from resume() are repeated and can be made into a function.
+
+
+
+
+
+Q6. Does the program use exception handling? Can you find any input that causes the program to terminate abnormally? Hint: run the program from the terminal prompt. The invalid input may not be normal text.  
+
+A6. Yes the program uses exception handling
+
+Cntrl+Z or Cntrl+C abruptly terminates the program.
+
+
+
+
+
+
+
+Q7. Do any of the classes have responsibility over more than one piece of functionality. If so, which ones?  
+
+A7. Many classes have responsibility have responsibility over just one piece of functionality. However, there are several classes that have multiple pieces of functionality. 
+
+Example: The class Game(Data) in game.py (line 19) in game.py has responsibility over several pieces of functionality, including, but not limited to moving the character, moving the dwarf and writing messages, counting the score of the game, etc.
+
+This class can be divided into more classes based on the functionality it deals with.
+
+
+
+
+
+
+
+Q8. Are the classes cohesive? List any that aren’t.  
+
+A8. Yes, most of the classes are cohesive. An example  of a non-cohesive class is Game(Data) (Line 19 in game.py). There are several functions in this class that manipulate only few of the variables in the class.
+
+
+
+Example 1: The function yesno() in line 72 and is_dark in line 81 manipulate less than 3 variables, hence they are not cohesive to the class
+
+
+
+Example 2: class Hint , line 52 in model.py is very uncohesive.There are 6 variables defined in the class but none of them are being manipulated in the class as shown below:
+
+
+
+class Hint(object):
+
+    """A hint offered if the player loiters in one area too long."""
+
+
+    turns_needed = 0
+    turn_counter = 0
+    penalty = 0
+    question = None
+    message = None
+    used = False
+
+
+    def __init__(self):
+
+        self.rooms = []
+
+
+
+
+
+
+
+
+Q9. Describe the author’s approach to commenting the code. Provide examples of good and bad comments that have been used in the code.  
+
+A9. The author has used comments generously throughout the program. Most of the comments are good approaches to commenting but there are several examples of bad comments as well, as listed below:
+
+Some examples of good comments are:
+
+
+
+In some functions, the author used multi-line commands to define what the purpose of that function is. An example is play() , line 11 in play.py as shown below:
+
+
+
+def play(seed=None):
+
+    """Turn the Python prompt into an Adventure game.
+
+    With optional the `seed` argument the caller can supply an integer
+    to start the Python random number generator at a known state.
+
+
+    """
+
+
+Also, the author uses a comment at the start of every module to briefly explain what the module is responsible for.
+
+
+
+
+
+Some examples of bad comments are:
+
+
+Line 27 in game.py:
+
+foobar = -1  # FOOBAR turn number of most recent still-valid "fee"
+
+The author could have used a better variable name instead of a comment
+
+
+
+Lines 25 and 26 in game.py:
+
+dwarves_killed = 0  # DKILL
+
+knife_location = None  # KNFLOC
+
+The author should not have used abbreviations in the comments
+
+
+
+
+
+
+
+
+
+Q 10. Provide an example of where vertical formatting has been used to make the code clearer.  
+
+Lines 69 to 89 in game.py is shown below:
+
+
+
+def write_message(self, n):
+        self.write(self.messages[n])
+
+
+    def yesno(self, s, yesno_callback, casual=False):
+        """Ask a question and prepare to receive a yes-or-no answer."""
+        self.write(s)
+        self.yesno_callback = yesno_callback
+        self.yesno_casual = casual
+
+
+    # Properties of the cave.
+
+
+    @property
+
+    def is_dark(self):
+        lamp = self.objects['lamp']
+        if self.is_here(lamp) and lamp.prop:
+            return False
+        return self.loc.is_dark
+
+
+    @property
+
+    def inventory(self):
+        return [ obj for obj in self.object_list if obj.is_toting ]
+
+
+
+
+
+Here there is a blank line between each function definition.
+
+
+
+Line 292 and Line 299  in game.py:
+
+
+
+if dwarf_count == 1:
+            self.write_message(4)
+        elif dwarf_count:
+            self.write('There are {} threatening little dwarves in the'
+                       ' room with you.\n'.format(dwarf_count))
+
+
+
+        if dwarf_attacks and self.dwarf_stage == 2:
+
+            self.dwarf_stage = 3
+
+
+
+There is adequate line spacing separating each if block.
+
+
+
+
+
+
+
+
+Q 11. Run the tests provided with the program. Do they pass or fail? Do you consider the tests meet the F.I.R.S.T. criteria? Provide details of why they do or do not meet the criteria.
+
+
+A11. Yes, the tests do pass.
+
+Note: The tests do not run when executed from the tests directory. However, the same test modules execute when run from the adventure directory (one up from tests). 
+
+
+
+
+
+The following is my evaluation of the tests against the F.I.R.S.T. criteria:
+
+
+
+Fast: The tests run in 0.43 secs, 3.287 secs and 2.852 secs. Although what is fast and not fast is subjective, I believe that the test run relatively quickly.
+
+Independent: I ran the tests in several different orders and they seem to work fine, which implies that the tests are independent of each other.
+
+Repeatable: The tests can be run in the PyDev environment or in the shell script. Hence they are repeatable for different environments. Note: One could make the case that the tests do not run in the tests directory and hence would not be repeatable. However, I would disagree with that statement as I think that is is merely an issue of whether or not.
+
+Self-Validating: All the tests pass
+
+Timely: The tests were written during development. In the Read-me file, the dates of the first public release and the test release are quite close, which would lead me to believe that the program and the tests were written simultaneously.
+
+
+
+Thus, I consider the tests to meet the F.I.R.S.T. criteria.
+
+
